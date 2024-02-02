@@ -97,53 +97,50 @@ To deploy your Node.js and React.js application on an Ubuntu server, follow thes
    cd frontend && npm install && npm run build
    ```
 
-   -create process.yml script file to run your backend server
+   - Create process.yml script file to run your backend server
 
    ```bash
    apps:
+        - script: '/backend project path/index.js'
+        exec_mode: 'fork'
+        name: 'worker-0'
+        env:
+        PORT: 3500
+        NODE_ENV: production
+        db: "database url"
+        jwtPrivateKey: "jwt-test"
+        - script: '/backend project path/index.js'
+        exec_mode: 'fork'
+        name: 'worker-1'
+        env:
+        PORT: 3501
+        NODE_ENV: production
+        db: "database url"
+        jwtPrivateKey: "jwt-test"
+        - script: '/backend project path/index.js'
+        exec_mode: 'fork'
+        name: 'worker-2'
+        env:
+        PORT: 3502
+        NODE_ENV: production
+        db: "database url"
+        jwtPrivateKey: "jwt-test
    ```
 
-- script: '/backend project path/index.js'
-  exec_mode: 'fork'
-  name: 'worker-0'
-  env:
-  PORT: 3500
-  NODE_ENV: production
-  db: "database url"
-  jwtPrivateKey: "jwt-test"
-- script: '/backend project path/index.js'
-  exec_mode: 'fork'
-  name: 'worker-1'
-  env:
-  PORT: 3501
-  NODE_ENV: production
-  db: "database url"
-  jwtPrivateKey: "jwt-test"
-- script: '/backend project path/index.js'
-  exec_mode: 'fork'
-  name: 'worker-2'
-  env:
-  PORT: 3502
-  NODE_ENV: production
-  db: "database url"
-  jwtPrivateKey: "jwt-test
+- Start your script file with PM2:
 
-  ````
-
-  - Start your script file with PM2:
-
-  ```bash
-  pm2 start process.yml
-  ````
+```bash
+pm2 start process.yml
+```
 
 9. **Configure Nginx:**
 
    - Edit the Nginx configuration file `/etc/nginx/sites-available/default`.
    - Configure Nginx as a reverse proxy with load balancing.
 
-   -Sample code of nginx configuration file
+   - Sample code of Nginx configuration file
 
-   ````bash
+   ```bash
    upstream loadbalancer {
        least_conn; #increase port list based on your cpu cores
        server localhost:port1;
@@ -168,15 +165,15 @@ To deploy your Node.js and React.js application on an Ubuntu server, follow thes
             proxy_buffering         on;
 
     }
-   }```
+   }
+   ```
 
-    - Test Nginx configuration and reload Nginx:
-    ```bash
-    sudo nginx -t
-    sudo systemctl reload nginx
-    ```
+   - Test Nginx configuration and reload Nginx:
 
-   ````
+   ```bash
+   sudo nginx -t
+   sudo systemctl reload nginx
+   ```
 
 10. **Set Up SSL Certificate with Certbot:**
 
