@@ -143,9 +143,9 @@ pm2 start process.yml
    ```bash
    upstream loadbalancer {
        least_conn; #increase port list based on your cpu cores
-       server localhost:port1;
-       server localhost:port2;
-       server localhost:port3;
+       server localhost:3500;
+       server localhost:3501;
+       server localhost:3502;
     }
 
     server {
