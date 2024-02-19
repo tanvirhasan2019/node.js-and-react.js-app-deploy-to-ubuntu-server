@@ -1,4 +1,4 @@
-# Node.js and React.js App Deployment Guide
+# Streamlined Deployment Protocol: Node.js and React.js Apps with MongoDB and Local Image Hosting on Ubuntu Server
 
 🚀 **Quick Start Guide**
 
