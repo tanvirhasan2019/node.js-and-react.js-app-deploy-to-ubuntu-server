@@ -1,20 +1,25 @@
 # Streamlined Deployment Protocol: Node.js and React.js Apps with MongoDB and Local Image Hosting on Ubuntu Server
 
+![Project Overview](./images/architecture.png)
+
 🚀 **Quick Start Guide**
 
 To deploy your Node.js and React.js application on an Ubuntu server, follow these steps:
 
 1. **Install NVM (Node Version Manager):**
+
    ```bash
    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
    ```
 
 2. **Install the Latest Node.js Version:**
+
    ```bash
    nvm install node
    ```
 
 3. **Install MongoDB:**
+
    ```bash
    sudo apt update
    sudo apt install gnupg wget apt-transport-https ca-certificates software-properties-common
@@ -98,25 +103,25 @@ To deploy your Node.js and React.js application on an Ubuntu server, follow thes
 
    ```yml
    apps:
-     - script: '/backend project path/index.js'
-       exec_mode: 'fork'
-       name: 'worker-0'
+     - script: "/backend project path/index.js"
+       exec_mode: "fork"
+       name: "worker-0"
        env:
          PORT: 3500
          NODE_ENV: production
          db: "database url"
          jwtPrivateKey: "jwt-test"
-     - script: '/backend project path/index.js'
-       exec_mode: 'fork'
-       name: 'worker-1'
+     - script: "/backend project path/index.js"
+       exec_mode: "fork"
+       name: "worker-1"
        env:
          PORT: 3501
          NODE_ENV: production
          db: "database url"
          jwtPrivateKey: "jwt-test"
-     - script: '/backend project path/index.js'
-       exec_mode: 'fork'
-       name: 'worker-2'
+     - script: "/backend project path/index.js"
+       exec_mode: "fork"
+       name: "worker-2"
        env:
          PORT: 3502
          NODE_ENV: production
