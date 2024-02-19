@@ -146,11 +146,12 @@ pm2 start process.yml
     server localhost:3500;
     server localhost:3501;
     server localhost:3502;
-}
+   }
+   ```
 
 server {
-    index index.html index.htm index.nginx-debian.html;
-    server_name example.com www.example.com;
+index index.html index.htm index.nginx-debian.html;
+server_name example.com www.example.com;
 
     # Security Headers
     add_header X-Frame-Options "SAMEORIGIN";
@@ -203,15 +204,17 @@ server {
         proxy_pass http://loadbalancer/;
         proxy_buffering on;
     }
+
 }
-   ```
 
-   - Test Nginx configuration and reload Nginx:
+````
 
-   ```bash
-   sudo nginx -t
-   sudo systemctl reload nginx
-   ```
+- Test Nginx configuration and reload Nginx:
+
+```bash
+sudo nginx -t
+sudo systemctl reload nginx
+````
 
 10. **Set Up SSL Certificate with Certbot:**
 
