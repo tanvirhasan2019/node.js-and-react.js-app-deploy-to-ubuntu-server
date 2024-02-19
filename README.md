@@ -142,30 +142,68 @@ pm2 start process.yml
 
    ```bash
    upstream loadbalancer {
-       least_conn; #increase port list based on your cpu cores
-       server localhost:3500;
-       server localhost:3501;
-       server localhost:3502;
-    }
+    least_conn; # increase port list based on your CPU cores
+    server localhost:3500;
+    server localhost:3501;
+    server localhost:3502;
+}
 
-    server {
+server {
+    index index.html index.htm index.nginx-debian.html;
+    server_name example.com www.example.com;
 
-      index index.html index.htm index.nginx-debian.html;
+    # Security Headers
+    add_header X-Frame-Options "SAMEORIGIN";
+    add_header X-XSS-Protection "1; mode=block";
+    add_header X-Content-Type-Options "nosniff";
 
-      server_name example.com www.example.com;
+    # Enable Keepalive Connections
+    keepalive_timeout 65;
 
-    # react app & front-end files
+    # Enable Gzip Compression
+    gzip on;
+    gzip_comp_level 5;
+    gzip_min_length 256;
+    gzip_proxied any;
+    gzip_vary on;
+    gzip_types
+        application/atom+xml
+        application/javascript
+        application/json
+        application/ld+json
+        application/manifest+json
+        application/rss+xml
+        application/vnd.geo+json
+        application/vnd.ms-fontobject
+        application/x-font-ttf
+        application/x-web-app-manifest+json
+        application/xhtml+xml
+        application/xml
+        font/opentype
+        image/bmp
+        image/svg+xml
+        image/x-icon
+        text/cache-manifest
+        text/css
+        text/plain
+        text/vcard
+        text/vnd.rim.location.xloc
+        text/vtt
+        text/x-component
+        text/x-cross-domain-policy;
 
+    # React app & front-end files
     location / {
-            root /var/www/html/build;
-            try_files $uri /index.html;
+        root /var/www/html/build;
+        try_files $uri /index.html;
     }
-    location /api/ {
-            proxy_pass http://loadbalancer/;
-            proxy_buffering         on;
 
+    # Proxy for API requests
+    location /api/ {
+        proxy_pass http://loadbalancer/;
+        proxy_buffering on;
     }
-   }
+}
    ```
 
    - Test Nginx configuration and reload Nginx:
